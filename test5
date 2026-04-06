@@ -1,0 +1,180 @@
+# ===========================
+#   SLOTS
+# ===========================
+S 10
+
+# ===========================
+#   GENRES
+# ===========================
+G 10 "Computer Science"
+G 20 "History"
+G 30 "Literature"
+
+# Duplicate genre (MUST PRINT IGNORED)
+G 10 "Duplicate"
+
+# ===========================
+#   BOOKS
+# ===========================
+BK 101 10 "Data Structures"
+BK 102 10 "Operating Systems"
+BK 103 10 "Algorithms Unlocked"
+
+BK 201 20 "Modern History"
+BK 202 20 "Ancient Civilizations"
+
+BK 301 30 "Shakespeare"
+BK 302 30 "The Odyssey"
+BK 303 30 "The Divine Comedy"
+
+# Duplicate book (MUST PRINT IGNORED)
+BK 101 10 "DS again"
+
+# ===========================
+#   MEMBERS
+# ===========================
+M 1001 "Maria"
+M 1002 "Nikos"
+M 1003 "Eleni"
+M 1004 "Giorgos"
+M 1005 "Anna"
+
+# Duplicate member (MUST PRINT IGNORED)
+M 1001 "M"
+
+# ===========================
+#   LOANS
+# ===========================
+L 1001 101
+L 1001 102
+L 1001 201
+
+L 1002 101
+L 1002 202
+
+L 1003 103
+L 1003 301
+L 1003 302
+
+L 1004 201
+L 1004 303
+
+L 1005 103
+
+# Loan same book twice (IGNORED)
+L 1001 101
+
+# Loan nonexistent member (IGNORED)
+L 9999 101
+
+# Loan nonexistent book (IGNORED)
+L 1001 9999
+
+# ===========================
+#   RETURNS + REVIEWS
+# ===========================
+# Maria
+R 1001 101 8 ok
+R 1001 102 9 ok
+R 1001 201 ok NA
+
+# Nikos
+R 1002 101 5 ok
+R 1002 202 lost
+
+# Eleni
+R 1003 103 10 ok
+R 1003 301 7 ok
+R 1003 302 ok NA
+
+# Giorgos
+R 1004 201 6 ok
+R 1004 303 10 ok
+
+# Anna (lost book)
+R 1005 103 lost
+
+# Return nonexistent loan (IGNORED)
+R 1005 202 ok 5
+
+# Return nonexistent member (IGNORED)
+R 9999 101 ok 5
+
+# Return nonexistent book (IGNORED)
+R 1001 9999 ok 5
+
+# ===========================
+#   AVL SEARCH
+# ===========================
+F "Data Structures"
+F "Algorithms Unlocked"
+F "The Odyssey"
+F "Shakespeare"
+F "Not Existing"
+
+# ===========================
+#   UPDATE TITLE (U)
+# ===========================
+U 101 "Advanced Data Structures"
+F "Advanced Data Structures"
+F "Data Structures"    # NOT FOUND
+
+# Try rename to existing title (IGNORED)
+U 102 "Algorithms Unlocked"
+
+# ===========================
+#   GENRE PRINTING
+# ===========================
+PG 10
+PG 20
+PG 30
+
+# Nonexistent genre
+PG 40
+
+# ===========================
+#   BUILD DISPLAY
+# ===========================
+D
+PD
+
+# ===========================
+#   MEMBER LOAN HISTORY
+# ===========================
+PM 1001
+PM 1002
+PM 1003
+PM 1004
+PM 1005
+
+# Nonexistent member
+PM 9999
+
+# ===========================
+#   TOP K BOOKS
+# ===========================
+TOP 3
+TOP 10
+
+# ===========================
+#   MEMBER ACTIVITY (SORTED LIST)
+# ===========================
+AM
+
+# ===========================
+#   SYSTEM STATS
+# ===========================
+X
+
+# ===========================
+#   RESET SYSTEM
+# ===========================
+BF
+
+# After reset (everything empty)
+X
+AM
+PD
+PM 1001
+F "Anything"
+G 1 "TryAgain"

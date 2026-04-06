@@ -1,0 +1,40 @@
+# --- 1. Setup ---
+G 1 Fiction
+M 100 Alice
+M 200 Bob
+M 300 Charlie
+BK 10 1 BookA
+BK 20 1 BookB
+BK 30 1 BookC
+BK 40 1 BookD
+ 
+# --- 2. Δημιουργία Δραστηριότητας ---
+ 
+# Η Alice κάνει πολλή δουλειά(Top User)
+# Δανείζεται και επιστρέφει το BookA(Activity: 1 loan + 1 review)
+L 100 10
+R 100 10 10 ok
+# Δανείζεται και επιστρέφει το BookB(Activity: 1 loan + 1 review)
+L 100 20
+R 100 20 10 ok
+# Σύνολο Alice : 2 Loans + 2 Reviews = 4 Activity Points
+ 
+# Ο Bob κάνει μέτρια δουλειά(Mid User)
+# Δανείζεται και επιστρέφει το BookC(Activity: 1 loan + 1 review)
+L 200 30
+R 200 30 5 ok
+# Σύνολο Bob : 1 Loan + 1 Review = 2 Activity Points
+ 
+# Ο Charlie κάνει λίγη δουλειά(Low User)
+# Δανείζεται το BookD και το κρατάει(Activity: 1 loan)
+L 300 40
+# Σύνολο Charlie : 1 Loan + 0 Reviews = 1 Activity Point
+ 
+# --- 3. Έλεγχος Bonus 7.1: O(1) Stats (Command X) ---
+# Πρέπει να υπολογίσει άμεσα τα στατιστικά.
+X
+ 
+# --- 4. Έλεγχος Bonus 7.2: Sorted List (Command AM) ---
+# Η λίστα πρέπει να είναι ήδη ταξινομημένη.
+# Σειρά: Alice(4)->Bob(2)->Charlie(1)
+AM

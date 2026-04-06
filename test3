@@ -1,0 +1,298 @@
+
+# ============================================
+# COMPREHENSIVE LIBRARY MANAGEMENT TEST FILE
+# ============================================
+
+# Setup: Define total display slots
+S 10
+
+# ============================================
+# SECTION 1: Basic Genre and Book Creation
+# ============================================
+G 1 "Computer_Science"
+G 2 "Mathematics"
+G 3 "Physics"
+G 4 "Literature"
+G 5 "History"
+
+# Create books in different genres
+BK 101 1 "Introduction_to_Algorithms"
+BK 102 1 "Data_Structures_Fundamentals"
+BK 103 1 "Operating_Systems_Concepts"
+BK 104 2 "Linear_Algebra"
+BK 105 2 "Calculus_Volume_1"
+BK 106 3 "Quantum_Mechanics"
+BK 107 3 "Classical_Physics"
+BK 108 4 "The_Great_Gatsby"
+BK 109 4 "1984"
+BK 110 5 "World_War_II_History"
+
+# ============================================
+# SECTION 2: Member Registration
+# ============================================
+M 1 "Alice_Johnson"
+M 2 "Bob_Smith"
+M 3 "Charlie_Brown"
+M 4 "Diana_Prince"
+M 5 "Eve_Adams"
+
+# ============================================
+# SECTION 3: Basic Loans
+# ============================================
+L 1 101
+L 1 102
+L 2 103
+L 2 104
+L 3 105
+L 3 106
+L 4 107
+L 5 108
+
+# Check member loans
+PM 1
+PM 2
+PM 3
+
+# ============================================
+# SECTION 4: Returns with Valid Scores
+# ============================================
+# Alice returns with scores
+R 1 101 9 ok
+R 1 102 8 ok
+
+# Bob returns with scores
+R 2 103 10 ok
+R 2 104 7 ok
+
+# Charlie returns with scores
+R 3 105 6 ok
+R 3 106 9 ok
+
+# Diana returns
+R 4 107 8 ok
+
+# Eve returns
+R 5 108 7 ok
+
+# Check updated genre lists (should be sorted by avg descending)
+PG 1
+PG 2
+PG 3
+PG 4
+
+# ============================================
+# SECTION 5: Invalid Score Handling
+# ============================================
+# New loans for testing invalid scores
+L 1 109
+L 2 110
+
+# Invalid score (>10) - should close loan but NOT update stats
+R 1 109 15 ok
+
+# Invalid score (<0) - should close loan but NOT update stats
+R 2 110 -5 ok
+
+# Verify books have no reviews
+PG 4
+PG 5
+
+# ============================================
+# SECTION 6: Lost Books
+# ============================================
+L 3 101
+L 3 102
+
+# Mark book as lost - should NOT contribute to display
+R 3 101 NA lost
+
+# Normal return
+R 3 102 10 ok
+
+# Check genre - lost book should still appear in list
+PG 1
+
+# ============================================
+# SECTION 7: NA (No Rating) Returns
+# ============================================
+L 4 103
+L 4 104
+L 4 105
+
+# Return without rating
+R 4 103 NA ok
+R 4 104 NA ok
+R 4 105 NA ok
+
+# Check that books without reviews don't affect average
+PG 1
+
+# ============================================
+# SECTION 8: Multiple Reviews on Same Book
+# ============================================
+L 1 103
+L 2 103
+L 5 103
+
+# Multiple people rate the same book
+R 1 103 10 ok
+R 2 103 8 ok
+R 5 103 9 ok
+
+# Check repositioning after multiple reviews
+PG 1
+
+# ============================================
+# SECTION 9: Display Allocation (D Command)
+# ============================================
+# Print stats before display allocation
+PS
+
+# Allocate display slots
+D
+
+# Print display results
+PD
+
+# ============================================
+# SECTION 10: Tie-Breaking Tests
+# ============================================
+# Create books with identical averages
+BK 201 2 "Advanced_Calculus"
+BK 202 2 "Discrete_Mathematics"
+BK 203 2 "Statistics"
+
+L 1 201
+L 2 202
+L 3 203
+
+# Give all three books the same average (8)
+R 1 201 8 ok
+R 2 202 8 ok
+R 3 203 8 ok
+
+# Check tie-breaking by bid (smaller bid first)
+PG 2
+
+# ============================================
+# SECTION 11: Error Cases & Duplicates
+# ============================================
+# Try to register duplicate genre
+G 1 "Computer_Science_Duplicate"
+
+# Try to register duplicate book
+BK 101 1 "Duplicate_Book"
+
+# Try to register duplicate member
+M 1 "Alice_Duplicate"
+
+# Try to loan non-existent book
+L 1 999
+
+# Try to loan non-existent member
+L 999 101
+
+# Try to loan already loaned book
+L 1 104
+L 1 104
+
+# Try to return non-loaned book
+R 1 999 5 ok
+
+# Try to return for non-existent member
+R 999 101 5 ok
+
+# ============================================
+# SECTION 12: Complex Display Scenario
+# ============================================
+# Add more books and reviews to test quota calculation
+BK 301 3 "Relativity_Theory"
+BK 302 3 "Thermodynamics"
+BK 303 4 "Hamlet"
+BK 304 4 "Pride_and_Prejudice"
+BK 305 5 "Ancient_Rome"
+BK 306 5 "Renaissance_Era"
+
+L 1 301
+L 2 302
+L 3 303
+L 4 304
+L 5 305
+L 1 306
+
+R 1 301 9 ok
+R 2 302 8 ok
+R 3 303 10 ok
+R 4 304 9 ok
+R 5 305 7 ok
+R 1 306 8 ok
+
+# Check all genres
+PG 1
+PG 2
+PG 3
+PG 4
+PG 5
+
+# Print stats before new display
+PS
+
+# Recalculate display
+D
+
+# Print final display
+PD
+
+# ============================================
+# SECTION 13: Empty Genre Check
+# ============================================
+G 99 "Empty_Genre"
+PG 99
+
+# ============================================
+# SECTION 14: Member with No Loans
+# ============================================
+M 99 "Inactive_Member"
+PM 99
+
+# ============================================
+# SECTION 15: Edge Case - Zero SLOTS
+# ============================================
+S 0
+D
+PD
+
+# Reset SLOTS for final check
+S 10
+D
+PD
+
+# ============================================
+# SECTION 16: Book Repositioning Test
+# ============================================
+# Add book and progressively increase its rating
+BK 401 1 "Machine_Learning"
+L 1 401
+R 1 401 5 ok
+PG 1
+
+L 2 401
+R 2 401 8 ok
+PG 1
+
+L 3 401
+R 3 401 10 ok
+PG 1
+
+# Should see book move up in the list
+
+# ============================================
+# SECTION 17: Final Statistics
+# ============================================
+PS
+PD
+
+# ============================================
+# End of Test File
+# ============================================
+
